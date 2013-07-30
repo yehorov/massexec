@@ -7,6 +7,7 @@ setup(name='massexec',
     description='Mass Remote Execution',
     author='Mykhaylo Yehorov',
     author_email='yehorov@gmail.com',
+    url='https://github.com/yehorov/massexec',
     license='BSD',
     scripts=['massexec.py'],
     requires=['twisted']
