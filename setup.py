@@ -9,7 +9,7 @@ setup(name='massexec',
     author_email='yehorov@gmail.com',
     url='https://github.com/yehorov/massexec',
     license='BSD',
-    long_description=open('README').read(),
+    long_description=open('README.rst').read(),
     scripts=['massexec.py'],
     requires=['twisted']
     )
