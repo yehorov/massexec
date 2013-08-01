@@ -63,3 +63,8 @@ Run 'massexec.py --help' to get help message::
           --version    Display Twisted version and exit.
           --help       Display this help and exit.
 
+
+License
+=======
+
+Massexec is published under the 3-Clause BSD license.
