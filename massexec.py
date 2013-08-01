@@ -64,16 +64,18 @@ class MassExecMultiple():
 
 class MassExecOptions(usage.Options):
 
+    synopsis = 'Usage: ' + os.path.basename(sys.argv[0]) + ' [options] host1 [host2 [host3...]]'
+
     optFlags = [
         ['log', 'v', 'Enable logging (defaults to stderr)'],
     ]
 
     optParameters = [
-        ['user', 'u', None, 'Username to connect'],
-        ['script', 's', None, 'Script to execute'],
-        ['file', 'f', None, 'Additional file'],
-        ['multiple', 'm', 5, 'Number of simultaneous clients', int],
-        ['bind', 'b', None, 'Source address of the connection '],
+        ['user', 'u', None, 'The username to log in as on the remote host'],
+        ['script', 's', None, 'The script file to copy and execute on remote host'],
+        ['file', 'f', None, 'The additional file to copy to the remote host'],
+        ['multiple', 'm', 10, 'The number of simultaneous connections', int],
+        ['bind', 'b', None, 'The source address of the connections '],
     ]
 
     def __init__(self):
@@ -87,11 +89,15 @@ class MassExecOptions(usage.Options):
     opt_f = opt_file
 
     def postOptions(self):
+        if self['script'] is None:
+            raise usage.UsageError("Missing script filename")
+
         if self['user'] is None:
             self['user'] = getpass.getuser()
 
-    def parseArgs(self, host1, *hosts):
-        self['hosts'].append(host1)
+    def parseArgs(self, *hosts):
+        if len(hosts) == 0:
+            raise usage.UsageError('Missing host(s)')
         self['hosts'].extend(hosts)
 
 
@@ -330,7 +336,7 @@ class ScriptChannel(channel.SSHChannel):
     name = 'session'
 
     def openFailed(self, reason):
-        log.msg('false failed: {}'.format(reason))
+        log.msg('channel open fail: {0}'.format(reason))
 
     def channelOpen(self, ignoredData):
         self.data = ''
@@ -412,7 +418,8 @@ if __name__ == '__main__':
     try:
         options.parseOptions(args)
     except usage.UsageError, u:
-        print 'ERROR: %s' % u
+        print >> sys.stderr, '{0}: {1}\n{2}'.format(
+            os.path.basename(sys.argv[0]), u, options)
         sys.exit(1)
 
     if options['log']:

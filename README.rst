@@ -31,7 +31,7 @@ Limitations
 Requirements
 ============
 
-The following are required to run massexec::
+The following are required to run massexec:
 
 * Python 2.6 or 2.7
 
@@ -43,12 +43,23 @@ Installation
 
 Install massexec with::
 
-    python setup.py install
+    # python setup.py install
 
 
 Running
 =======
 
-Run 'massexec.py --help' to get help message.
+Run 'massexec.py --help' to get help message::
 
-    massexec.py -s <script> [-f <file>]* [-u <user>] host1...
+    $ massexec.py --help
+    Usage: massexec.py [options] host1 [host2 [host3...]]
+    Options:
+      -v, --log        Enable logging (defaults to stderr)
+      -u, --user=      The username to log in as on the remote host
+      -s, --script=    The script file to copy and execute on remote host
+      -f, --file=      The additional file to copy to the remote host
+      -m, --multiple=  The number of simultaneous connections [default: 10]
+      -b, --bind=      The source address of the connections
+          --version    Display Twisted version and exit.
+          --help       Display this help and exit.
+
