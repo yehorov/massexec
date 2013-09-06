@@ -237,7 +237,7 @@ class SSHExecConnection(connection.SSHConnection):
                 rperm += permbit
             permbit *= 2
 
-        lf = file(local, 'r')
+        lf = open(local, 'r')
         flags = filetransfer.FXF_WRITE|filetransfer.FXF_CREAT|filetransfer.FXF_TRUNC
         d = self.client.openFile(remote, flags, {'permissions': rperm})
         d.addCallback(self._cbPutOpenFile, lf)
