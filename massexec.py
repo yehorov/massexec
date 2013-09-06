@@ -309,7 +309,8 @@ class SSHExecConnection(connection.SSHConnection):
             self.transport.loseConnection()
             return
         local = self.files.pop(0)
-        d = self.client.removeFile(local)
+        remote = os.path.split(local)[1]
+        d = self.client.removeFile(remote)
         d.addCallback(self._cbRemove)
         d.addErrback(lambda ignored: self.transport.loseConnection())
         return d
